@@ -447,7 +447,18 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
           
           ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
           ctx.font = "600 22px 'Outfit', monospace";
-          ctx.fillText(`${timeStr} / ${totalMin}min`, W / 2, 120);
+          
+          // Separator
+          ctx.textAlign = "center";
+          ctx.fillText("/", W / 2, 120);
+          
+          // Timer (right-aligned to prevent shifting the rest)
+          ctx.textAlign = "right";
+          ctx.fillText(timeStr, W / 2 - 15, 120);
+          
+          // Duration (left-aligned to stay completely static)
+          ctx.textAlign = "left";
+          ctx.fillText(`${totalMin}min`, W / 2 + 15, 120);
         }
 
         animRef.current = requestAnimationFrame(draw);
