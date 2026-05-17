@@ -432,7 +432,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ctx.fillText(`${p.diffFreq.toFixed(1)}Hz`, W / 2, 45);
 
         // Rest Banner (Flashy inverted box) fixed at top HUD between left and center
-        if (p.timeline?.track_metadata.name.toLowerCase().includes("pomodoro") && p.currentHz <= 14) {
+        if (p.timeline?.track_metadata.name.toLowerCase().includes("pomodoro") && p.currentHz <= 12) {
           ctx.save();
           ctx.font = "800 36px 'Outfit', monospace"; // Increased by 50%
           const text = "D E S C A N S E";
