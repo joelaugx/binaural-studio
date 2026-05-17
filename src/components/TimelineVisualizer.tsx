@@ -20,6 +20,9 @@ interface TimelineVisualizerProps {
   elapsed: number;
   traceAColor: string;
   traceBColor: string;
+  axesColor: string;
+  curveColor: string;
+  cursorColor: string;
   stateColor: string;
 }
 
@@ -185,16 +188,16 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
           ctx.lineTo(chartRight, y2);
           ctx.stroke();
 
-          // Band label (centered)
+          // Band label (centered -> moved to right)
           const labelY = y1 + bandH / 2;
-          ctx.textAlign = "center";
+          ctx.textAlign = "right";
           ctx.textBaseline = "middle";
           ctx.font = "800 22px 'Inter', system-ui, sans-serif";
           ctx.fillStyle = hexToRgba(band.color, 0.35);
           ctx.shadowColor = band.color;
           ctx.shadowBlur = 15;
           const spacedName = band.name.toUpperCase().split("").join(String.fromCharCode(8202));
-          ctx.fillText(spacedName, chartLeft + chartW / 2, labelY);
+          ctx.fillText(spacedName, chartRight - 20, labelY);
           ctx.shadowBlur = 0;
         }
 
@@ -221,17 +224,17 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         // ===== Y-AXIS (Hz labels) =====
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
-        ctx.font = "500 13px 'JetBrains Mono', monospace";
-        ctx.fillStyle = hexToRgba(p.traceAColor, 0.4);
+        ctx.font = "500 26px 'JetBrains Mono', monospace";
+        ctx.fillStyle = hexToRgba(p.axesColor, 1.0);
 
         const ySteps = maxHz <= 15 ? [0, 2, 4, 6, 8, 10, 12, 14] : [0, 4, 8, 14, 20, 30, 40];
         for (const hz of ySteps) {
           if (hz > maxHz) continue;
           const y = hzToY(hz);
-          ctx.fillText(`${hz}`, chartLeft - 10, y);
+          ctx.fillText(`${hz}`, chartLeft - 15, y);
 
-          // Subtle grid line (uses traceA color)
-          ctx.strokeStyle = hexToRgba(p.traceAColor, 0.06);
+          // Subtle grid line (uses axesColor)
+          ctx.strokeStyle = hexToRgba(p.axesColor, 0.2);
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(chartLeft, y);
@@ -243,9 +246,9 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ctx.save();
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.font = "600 12px 'JetBrains Mono', monospace";
-        ctx.fillStyle = hexToRgba(p.traceAColor, 0.3);
-        ctx.translate(20, chartTop + chartH / 2);
+        ctx.font = "600 24px 'JetBrains Mono', monospace";
+        ctx.fillStyle = hexToRgba(p.axesColor, 0.8);
+        ctx.translate(30, chartTop + chartH / 2);
         ctx.rotate(-Math.PI / 2);
         ctx.fillText("Hz", 0, 0);
         ctx.restore();
@@ -253,16 +256,16 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         // ===== X-AXIS (Minutes) =====
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
-        ctx.font = "500 13px 'JetBrains Mono', monospace";
-        ctx.fillStyle = hexToRgba(p.traceAColor, 0.4);
+        ctx.font = "500 26px 'JetBrains Mono', monospace";
+        ctx.fillStyle = hexToRgba(p.axesColor, 1.0);
 
         const minuteStep = totalDur <= 1800 ? 5 : totalDur <= 3600 ? 10 : 15;
         for (let s = 0; s <= totalDur; s += minuteStep * 60) {
           const x = secToX(s);
-          ctx.fillText(formatTimeAxis(s), x, chartBottom + 10);
+          ctx.fillText(formatTimeAxis(s), x, chartBottom + 15);
 
-          // Vertical grid (uses traceA color)
-          ctx.strokeStyle = hexToRgba(p.traceAColor, 0.06);
+          // Vertical grid (uses axesColor)
+          ctx.strokeStyle = hexToRgba(p.axesColor, 0.2);
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(x, chartTop);
@@ -271,9 +274,9 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         }
 
         // "Minutes" label
-        ctx.font = "600 12px 'JetBrains Mono', monospace";
-        ctx.fillStyle = hexToRgba(p.traceAColor, 0.3);
-        ctx.fillText("Minutes", chartLeft + chartW / 2, chartBottom + 35);
+        ctx.font = "600 24px 'JetBrains Mono', monospace";
+        ctx.fillStyle = hexToRgba(p.axesColor, 0.8);
+        ctx.fillText("Minutes", chartLeft + chartW / 2, chartBottom + 55);
 
         // ===== TIMELINE PATH =====
         if (p.timeline && p.timeline.timeline.length >= 2) {
@@ -283,8 +286,8 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
           // -- Future path (dashed, dim) --
           ctx.save();
           ctx.setLineDash([8, 6]);
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
-          ctx.lineWidth = 2;
+          ctx.strokeStyle = hexToRgba(p.curveColor, 0.4);
+          ctx.lineWidth = 3;
           ctx.beginPath();
 
           // Draw full path
@@ -309,13 +312,13 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
           ctx.setLineDash([]);
           ctx.restore();
 
-          // -- Traversed path (solid, glowing — uses traceA color) --
+          // -- Traversed path (solid, glowing — uses curveColor) --
           if (currentSec > 0) {
             ctx.save();
             ctx.shadowBlur = 18;
-            ctx.shadowColor = p.traceAColor;
-            ctx.strokeStyle = hexToRgba(p.traceAColor, 0.9);
-            ctx.lineWidth = 3;
+            ctx.shadowColor = p.curveColor;
+            ctx.strokeStyle = hexToRgba(p.curveColor, 1.0);
+            ctx.lineWidth = 5;
             ctx.beginPath();
 
             // Draw from start to currentTime with fine resolution
@@ -338,31 +341,35 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
             ctx.stroke();
             ctx.restore();
 
-            // -- Current position indicator (uses traceB color) --
+            // -- Current position indicator (uses cursorColor) --
             const curX = secToX(currentSec);
             const curY = hzToY(p.currentHz);
+            
+            // Radar blink effect
+            const pulse = Math.sin(performance.now() / 150); // fast blink
+            const glowRadius = 8 + (pulse > 0 ? pulse * 6 : 0);
 
             // Outer glow
             ctx.save();
-            ctx.shadowBlur = 25;
-            ctx.shadowColor = p.traceBColor;
-            ctx.fillStyle = p.traceBColor;
+            ctx.shadowBlur = 25 + glowRadius;
+            ctx.shadowColor = p.cursorColor;
+            ctx.fillStyle = hexToRgba(p.cursorColor, 0.6 + (pulse > 0 ? pulse * 0.4 : 0));
             ctx.beginPath();
-            ctx.arc(curX, curY, 8, 0, Math.PI * 2);
+            ctx.arc(curX, curY, glowRadius, 0, Math.PI * 2);
             ctx.fill();
             ctx.restore();
 
             // Inner white core
             ctx.fillStyle = "#ffffff";
             ctx.beginPath();
-            ctx.arc(curX, curY, 5, 0, Math.PI * 2);
+            ctx.arc(curX, curY, 6, 0, Math.PI * 2);
             ctx.fill();
 
-            // Ring (traceB color)
-            ctx.strokeStyle = hexToRgba(p.traceBColor, 0.8);
-            ctx.lineWidth = 2;
+            // Ring (cursorColor)
+            ctx.strokeStyle = hexToRgba(p.cursorColor, 1.0);
+            ctx.lineWidth = 3;
             ctx.beginPath();
-            ctx.arc(curX, curY, 10, 0, Math.PI * 2);
+            ctx.arc(curX, curY, 12, 0, Math.PI * 2);
             ctx.stroke();
           }
         }

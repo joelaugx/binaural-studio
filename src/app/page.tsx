@@ -86,6 +86,9 @@ export default function StudioPage() {
   // UI state
   const [traceAColor, setTraceAColor] = useState("#3b82f6");
   const [traceBColor, setTraceBColor] = useState("#10b981");
+  const [axesColor, setAxesColor] = useState("#ffffff");
+  const [curveColor, setCurveColor] = useState("#3b82f6");
+  const [cursorColor, setCursorColor] = useState("#10b981");
   const [isRecordingMode, setIsRecordingMode] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [timerSeconds, setTimerSeconds] = useState(0);
@@ -307,6 +310,9 @@ export default function StudioPage() {
           elapsed={recorder.elapsed}
           traceAColor={traceAColor}
           traceBColor={traceBColor}
+          axesColor={axesColor}
+          curveColor={curveColor}
+          cursorColor={cursorColor}
           stateColor={brainState.color}
         />
       )}
@@ -397,20 +403,6 @@ export default function StudioPage() {
               );
             })}
           </nav>
-
-          {/* Audio Toggle */}
-          <button
-            onClick={audio.toggle}
-            title={audio.isPlaying ? "Pausar Áudio" : "Tocar Áudio"}
-            className="w-12 h-12 flex items-center justify-center rounded-2xl shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all hover:scale-105"
-            style={{
-              backgroundColor: audio.isPlaying ? "#1e3a8a" : "#2563eb",
-            }}
-          >
-            <span className="text-2xl ml-1 leading-none">
-              {audio.isPlaying ? "⏸" : "▶"}
-            </span>
-          </button>
 
           {/* Record Button */}
           <button
@@ -745,30 +737,68 @@ export default function StudioPage() {
 
         {/* Col 3: Colors + Record Duration + Test */}
         <div className="flex-[0.8] flex flex-col gap-3">
-          <div className="flex gap-4">
-            <div className="flex-1 text-center">
-              <label className="text-[8px] text-slate-400 uppercase font-black mb-1 block">
-                Cor A
-              </label>
-              <input
-                type="color"
-                value={traceAColor}
-                onChange={(e) => setTraceAColor(e.target.value)}
-                className="w-full h-8 rounded"
-              />
+          {vizMode === "oscilloscope" ? (
+            <div className="flex gap-4">
+              <div className="flex-1 text-center">
+                <label className="text-[8px] text-slate-400 uppercase font-black mb-1 block">
+                  Cor A
+                </label>
+                <input
+                  type="color"
+                  value={traceAColor}
+                  onChange={(e) => setTraceAColor(e.target.value)}
+                  className="w-full h-8 rounded"
+                />
+              </div>
+              <div className="flex-1 text-center">
+                <label className="text-[8px] text-slate-400 uppercase font-black mb-1 block">
+                  Cor B
+                </label>
+                <input
+                  type="color"
+                  value={traceBColor}
+                  onChange={(e) => setTraceBColor(e.target.value)}
+                  className="w-full h-8 rounded"
+                />
+              </div>
             </div>
-            <div className="flex-1 text-center">
-              <label className="text-[8px] text-slate-400 uppercase font-black mb-1 block">
-                Cor B
-              </label>
-              <input
-                type="color"
-                value={traceBColor}
-                onChange={(e) => setTraceBColor(e.target.value)}
-                className="w-full h-8 rounded"
-              />
+          ) : (
+            <div className="flex gap-2">
+              <div className="flex-1 text-center">
+                <label className="text-[8px] text-slate-400 uppercase font-black mb-1 block">
+                  Eixos
+                </label>
+                <input
+                  type="color"
+                  value={axesColor}
+                  onChange={(e) => setAxesColor(e.target.value)}
+                  className="w-full h-8 rounded"
+                />
+              </div>
+              <div className="flex-1 text-center">
+                <label className="text-[8px] text-slate-400 uppercase font-black mb-1 block">
+                  Curva
+                </label>
+                <input
+                  type="color"
+                  value={curveColor}
+                  onChange={(e) => setCurveColor(e.target.value)}
+                  className="w-full h-8 rounded"
+                />
+              </div>
+              <div className="flex-1 text-center">
+                <label className="text-[8px] text-slate-400 uppercase font-black mb-1 block">
+                  Cursor
+                </label>
+                <input
+                  type="color"
+                  value={cursorColor}
+                  onChange={(e) => setCursorColor(e.target.value)}
+                  className="w-full h-8 rounded"
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Record Duration */}
           <div>
