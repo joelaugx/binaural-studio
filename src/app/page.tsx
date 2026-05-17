@@ -828,10 +828,14 @@ export default function StudioPage() {
           </div>
 
           <button
-            onClick={audio.testBeep}
-            className="w-full text-[9px] font-black bg-white/5 py-2.5 rounded-xl border border-white/10 text-slate-400 uppercase hover:text-white hover:bg-white/10 transition"
+            onClick={audio.toggle}
+            className={`w-full text-[10px] font-black py-3 rounded-xl border uppercase tracking-widest transition-all ${
+              audio.isPlaying
+                ? "bg-red-500/20 border-red-500/50 text-red-400 hover:bg-red-500/30"
+                : "bg-emerald-500/20 border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/30"
+            }`}
           >
-            🔔 Audio Check
+            {audio.isPlaying ? "⏸ PAUSAR ÁUDIO" : "▶ LIGAR ÁUDIO"}
           </button>
 
           {/* Canal de Música 3 */}
