@@ -1,0 +1,42 @@
+{
+  "track_metadata": {
+    "id": "pomodoro_50hz_5x_20_5",
+    "name": "Pomodoro 20x5 (5 Ciclos) - Gamma 50Hz / Alpha 10Hz",
+    "total_duration_seconds": 7500,
+    "description": "Sessão de hiperfoco de 125 minutos dividida em 5 ciclos. Cada ciclo possui 20 minutos de foco intenso em ondas Gamma (50Hz) seguidos por 5 minutos de recuperação neurológica profunda em ondas Alpha (10Hz)."
+  },
+  "audio_settings": {
+    "carrier_frequency_hz": 200.0,
+    "wave_type": "sine",
+    "technique": "binaural_beat"
+  },
+  "timeline": [
+    { "time_second": 0, "target_binaural_hz": 14.0, "interpolation": "linear", "stage_label": "Beta" },
+    { "time_second": 60, "target_binaural_hz": 50.0, "interpolation": "smooth", "stage_label": "Gamma" },
+    { "time_second": 1140, "target_binaural_hz": 50.0, "interpolation": "linear", "stage_label": "Gamma" },
+    { "time_second": 1200, "target_binaural_hz": 10.0, "interpolation": "smooth", "stage_label": "Alpha" },
+    { "time_second": 1440, "target_binaural_hz": 10.0, "interpolation": "linear", "stage_label": "Alpha" },
+
+    { "time_second": 1500, "target_binaural_hz": 50.0, "interpolation": "smooth", "stage_label": "Gamma" },
+    { "time_second": 2640, "target_binaural_hz": 50.0, "interpolation": "linear", "stage_label": "Gamma" },
+    { "time_second": 2700, "target_binaural_hz": 10.0, "interpolation": "smooth", "stage_label": "Alpha" },
+    { "time_second": 2940, "target_binaural_hz": 10.0, "interpolation": "linear", "stage_label": "Alpha" },
+
+    { "time_second": 3000, "target_binaural_hz": 50.0, "interpolation": "smooth", "stage_label": "Gamma" },
+    { "time_second": 4140, "target_binaural_hz": 50.0, "interpolation": "linear", "stage_label": "Gamma" },
+    { "time_second": 4200, "target_binaural_hz": 10.0, "interpolation": "smooth", "stage_label": "Alpha" },
+    { "time_second": 4440, "target_binaural_hz": 10.0, "interpolation": "linear", "stage_label": "Alpha" },
+
+    { "time_second": 4500, "target_binaural_hz": 50.0, "interpolation": "smooth", "stage_label": "Gamma" },
+    { "time_second": 5640, "target_binaural_hz": 50.0, "interpolation": "linear", "stage_label": "Gamma" },
+    { "time_second": 5700, "target_binaural_hz": 10.0, "interpolation": "smooth", "stage_label": "Alpha" },
+    { "time_second": 5940, "target_binaural_hz": 10.0, "interpolation": "linear", "stage_label": "Alpha" },
+
+    { "time_second": 6000, "target_binaural_hz": 50.0, "interpolation": "smooth", "stage_label": "Gamma" },
+    { "time_second": 7140, "target_binaural_hz": 50.0, "interpolation": "linear", "stage_label": "Gamma" },
+    { "time_second": 7200, "target_binaural_hz": 10.0, "interpolation": "smooth", "stage_label": "Alpha" },
+    { "time_second": 7440, "target_binaural_hz": 10.0, "interpolation": "linear", "stage_label": "Alpha" },
+
+    { "time_second": 7500, "target_binaural_hz": 14.0, "interpolation": "smooth", "stage_label": "Beta" }
+  ]
+}
