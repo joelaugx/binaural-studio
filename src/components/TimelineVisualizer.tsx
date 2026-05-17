@@ -464,7 +464,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ref={containerRef}
         className="relative flex items-center justify-center overflow-hidden"
         style={{
-          backgroundColor: "var(--color-bg-deep)",
+          background: "radial-gradient(circle at center, #1b0a33 0%, #000000 90%)",
           boxShadow: "0 0 80px rgba(0,0,0,0.7)",
         }}
       >

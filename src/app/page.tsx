@@ -278,7 +278,7 @@ export default function StudioPage() {
   }, []);
 
   return (
-    <main className="relative flex items-center justify-center h-screen w-screen overflow-hidden bg-black">
+    <main className="relative flex items-center justify-center h-screen w-screen overflow-hidden bg-gradient-to-br from-[#120524] via-black to-[#080211]">
       {/* ===== CANVAS (Mode-dependent) ===== */}
       {vizMode === "oscilloscope" ? (
         <Visualizer
