@@ -269,21 +269,20 @@ export default function StudioPage() {
     }
   }, [isRecordingMode, vizMode, timelineEngine.isRunning, timelineEngine.currentTime, timelineEngine.totalDuration, stopRecordingSequence]);
 
-  // ---- PHASE CHANGE BELL ----
-  const prevLabelRef = useRef(timelineEngine.currentLabel);
+  // ---- REST PHASE BELL (POMODORO ONLY) ----
+  const isPomodoro = !!activeTimeline?.track_metadata.name.toLowerCase().includes("pomodoro");
+  const isResting = isPomodoro && timelineEngine.currentHz <= 12;
+  const prevRestingRef = useRef(isResting);
+
   useEffect(() => {
-    if (timelineEngine.currentLabel !== prevLabelRef.current) {
-      // Don't ring on the very first initial state load
-      if (prevLabelRef.current !== "") {
-        // Only ring the bell for Pomodoro tracks (to avoid waking up in sleep tracks)
-        const isPomodoro = activeTimeline?.track_metadata.name.toLowerCase().includes("pomodoro");
-        if (isPomodoro) {
-          audioRef.current.playPhaseBell();
-        }
+    if (isResting !== prevRestingRef.current) {
+      // Don't ring on the very first initial state load (currentTime === 0)
+      if (timelineEngine.currentTime > 0) {
+        audioRef.current.playPhaseBell();
       }
-      prevLabelRef.current = timelineEngine.currentLabel;
+      prevRestingRef.current = isResting;
     }
-  }, [timelineEngine.currentLabel, activeTimeline]);
+  }, [isResting, timelineEngine.currentTime]);
 
   // ---- PRESET BUTTON ----
   const selectPreset = useCallback(
