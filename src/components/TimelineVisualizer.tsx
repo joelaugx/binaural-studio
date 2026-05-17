@@ -42,7 +42,7 @@ const BANDS = [
 ];
 
 // Chart layout margins (in 1920x1080 canvas coordinates)
-const MARGIN = { top: 140, right: 60, bottom: 80, left: 70 };
+const MARGIN = { top: 180, right: 60, bottom: 80, left: 70 };
 
 // ---- HELPERS ----
 
