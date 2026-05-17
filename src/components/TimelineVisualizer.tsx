@@ -412,47 +412,35 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
 
         // Binaural Result (center)
         ctx.textAlign = "center";
+        ctx.textBaseline = "top";
         ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-        ctx.font = "600 16px 'Inter', system-ui, sans-serif";
-        ctx.fillText("B I N A U R A L   B E A T", W / 2, 30);
+        ctx.font = "600 15px 'Inter', system-ui, sans-serif";
+        ctx.fillText("B I N A U R A L   B E A T", W / 2, 25);
         ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-        ctx.font = "800 56px 'JetBrains Mono', monospace";
-        ctx.fillText(`${p.diffFreq.toFixed(1)}Hz`, W / 2, 58);
+        ctx.font = "800 54px 'JetBrains Mono', monospace";
+        ctx.fillText(`${p.diffFreq.toFixed(1)}Hz`, W / 2, 45);
 
-        // ===== HUD: BOTTOM BAR =====
-        // (Brain State text removed)
-
-        // Timeline progress time (bottom-left)
+        // ===== HUD: TIMER (Top Center) =====
         if (p.timeline) {
           const totalMin = Math.floor(p.timeline.track_metadata.total_duration_seconds / 60);
-          const curMin = Math.floor(p.currentTime / 60);
-          const curSec = Math.floor(p.currentTime % 60);
-          ctx.textAlign = "left";
-          ctx.textBaseline = "bottom";
-          ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-          ctx.font = "600 12px 'Inter', system-ui, sans-serif";
-          ctx.fillText("TIMELINE", 40, H - 55);
-          ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
-          ctx.font = "600 28px 'JetBrains Mono', monospace";
-          ctx.fillText(
-            `${curMin.toString().padStart(2, "0")}:${curSec.toString().padStart(2, "0")} / ${totalMin}min`,
-            40, H - 28
-          );
-        }
+          let timeStr = "00:00.0";
+          
+          if (p.showHud && recordingStartTimeRef.current) {
+            // Live recording timer
+            const recMs = Math.max(0, performance.now() - recordingStartTimeRef.current);
+            timeStr = formatTimeWithTenths(recMs);
+          } else if (p.currentTime > 0) {
+            // Playback without recording
+            timeStr = formatTimeWithTenths(p.currentTime * 1000);
+          }
 
-        // Recording timer (bottom-right)
-        if (p.showHud && recordingStartTimeRef.current) {
-          const recMs = performance.now() - recordingStartTimeRef.current;
-          const timeStr = formatTimeWithTenths(recMs);
-
-          ctx.textAlign = "right";
-          ctx.textBaseline = "bottom";
-          ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-          ctx.font = "600 12px 'Inter', system-ui, sans-serif";
-          ctx.fillText("R E C   T I M E", W - 40, H - 55);
-          ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-          ctx.font = "600 28px 'JetBrains Mono', monospace";
-          ctx.fillText(timeStr, W - 40, H - 28);
+          ctx.fillStyle = "rgba(255, 255, 255, 0.35)";
+          ctx.font = "600 11px 'Inter', system-ui, sans-serif";
+          ctx.fillText("T I M E L I N E   P R O G R E S S", W / 2, 105);
+          
+          ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+          ctx.font = "600 22px 'JetBrains Mono', monospace";
+          ctx.fillText(`${timeStr} / ${totalMin}min`, W / 2, 120);
         }
 
         animRef.current = requestAnimationFrame(draw);
