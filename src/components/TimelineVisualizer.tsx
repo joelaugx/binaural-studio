@@ -213,7 +213,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
           const labelY = y1 + bandH / 2;
           ctx.textAlign = "right";
           ctx.textBaseline = "middle";
-          ctx.font = "800 22px 'Inter', system-ui, sans-serif";
+          ctx.font = "800 22px 'Outfit', system-ui, sans-serif";
           ctx.fillStyle = hexToRgba(band.color, 0.35);
           ctx.shadowColor = band.color;
           ctx.shadowBlur = 15;
@@ -227,7 +227,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         // ===== Y-AXIS (Hz labels) =====
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
-        ctx.font = "500 21px 'JetBrains Mono', monospace";
+        ctx.font = "500 21px 'Outfit', monospace";
         ctx.fillStyle = hexToRgba(p.axesColor, 1.0);
 
         const ySteps = maxHz <= 15 ? [0, 2, 4, 6, 8, 10, 12, 14] : [0, 4, 8, 14, 20, 30, 40];
@@ -249,7 +249,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ctx.save();
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.font = "600 18px 'JetBrains Mono', monospace";
+        ctx.font = "600 18px 'Outfit', monospace";
         ctx.fillStyle = hexToRgba(p.axesColor, 0.8);
         ctx.translate(30, chartTop + chartH / 2);
         ctx.rotate(-Math.PI / 2);
@@ -259,7 +259,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         // ===== X-AXIS (Minutes) =====
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
-        ctx.font = "500 21px 'JetBrains Mono', monospace";
+        ctx.font = "500 21px 'Outfit', monospace";
         ctx.fillStyle = hexToRgba(p.axesColor, 1.0);
 
         const minuteStep = totalDur <= 1800 ? 5 : totalDur <= 3600 ? 10 : 15;
@@ -277,7 +277,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         }
 
         // "Minutes" label
-        ctx.font = "600 18px 'JetBrains Mono', monospace";
+        ctx.font = "600 18px 'Outfit', monospace";
         ctx.fillStyle = hexToRgba(p.axesColor, 0.8);
         ctx.fillText("Minutes", chartLeft + chartW / 2, chartBottom + 50);
 
@@ -395,29 +395,29 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
         ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-        ctx.font = "600 13px 'Inter', system-ui, sans-serif";
+        ctx.font = "600 13px 'Outfit', system-ui, sans-serif";
         ctx.fillText("L E F T".split("").join(String.fromCharCode(8202)), 40, 30);
         ctx.fillStyle = p.traceAColor;
-        ctx.font = "600 30px 'JetBrains Mono', monospace";
+        ctx.font = "600 30px 'Outfit', monospace";
         ctx.fillText(`${p.baseFreq.toFixed(1)} Hz`, 40, 50);
 
         // Right Ear
         ctx.textAlign = "right";
         ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-        ctx.font = "600 13px 'Inter', system-ui, sans-serif";
+        ctx.font = "600 13px 'Outfit', system-ui, sans-serif";
         ctx.fillText("R I G H T".split("").join(String.fromCharCode(8202)), W - 40, 30);
         ctx.fillStyle = p.traceBColor;
-        ctx.font = "600 30px 'JetBrains Mono', monospace";
+        ctx.font = "600 30px 'Outfit', monospace";
         ctx.fillText(`${(p.baseFreq + p.diffFreq).toFixed(1)} Hz`, W - 40, 50);
 
         // Binaural Result (center)
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
         ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-        ctx.font = "600 15px 'Inter', system-ui, sans-serif";
+        ctx.font = "600 15px 'Outfit', system-ui, sans-serif";
         ctx.fillText("B I N A U R A L   B E A T", W / 2, 25);
         ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-        ctx.font = "800 54px 'JetBrains Mono', monospace";
+        ctx.font = "800 54px 'Outfit', monospace";
         ctx.fillText(`${p.diffFreq.toFixed(1)}Hz`, W / 2, 45);
 
         // ===== HUD: TIMER (Top Center) =====
@@ -435,11 +435,11 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
           }
 
           ctx.fillStyle = "rgba(255, 255, 255, 0.35)";
-          ctx.font = "600 11px 'Inter', system-ui, sans-serif";
+          ctx.font = "600 11px 'Outfit', system-ui, sans-serif";
           ctx.fillText("T I M E L I N E   P R O G R E S S", W / 2, 105);
           
           ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
-          ctx.font = "600 22px 'JetBrains Mono', monospace";
+          ctx.font = "600 22px 'Outfit', monospace";
           ctx.fillText(`${timeStr} / ${totalMin}min`, W / 2, 120);
         }
 
