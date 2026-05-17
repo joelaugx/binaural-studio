@@ -162,7 +162,10 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         const H = 1080;
 
         // ===== BACKGROUND =====
-        ctx.fillStyle = "#02040a";
+        const bgGrad = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W * 0.8);
+        bgGrad.addColorStop(0, "#1b0a33");
+        bgGrad.addColorStop(1, "#000000");
+        ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, W, H);
 
         const chartLeft = MARGIN.left;
