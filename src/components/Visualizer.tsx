@@ -219,12 +219,12 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(
           
           // Label
           ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-          ctx.font = "600 12px 'Inter', system-ui, -apple-system, sans-serif";
+          ctx.font = "600 12px 'Outfit', system-ui, sans-serif";
           ctx.fillText("LEFT".split("").join(String.fromCharCode(8202)), 40, 40);
           
           // Value
           ctx.fillStyle = traceAColorRef.current;
-          ctx.font = "600 28px 'JetBrains Mono', 'SF Mono', Menlo, monospace";
+          ctx.font = "600 28px 'Outfit', monospace";
           ctx.fillText(`${baseFreqRef.current.toFixed(1)} Hz`, 40, 58);
 
           // ==============================
@@ -234,12 +234,12 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(
           
           // Label
           ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-          ctx.font = "600 12px 'Inter', system-ui, -apple-system, sans-serif";
+          ctx.font = "600 12px 'Outfit', system-ui, sans-serif";
           ctx.fillText("RIGHT".split("").join(String.fromCharCode(8202)), width - 40, 40);
           
           // Value
           ctx.fillStyle = traceBColorRef.current;
-          ctx.font = "600 28px 'JetBrains Mono', 'SF Mono', Menlo, monospace";
+          ctx.font = "600 28px 'Outfit', monospace";
           ctx.fillText(`${(baseFreqRef.current + diffFreqRef.current).toFixed(1)} Hz`, width - 40, 58);
 
           // ==============================
@@ -248,13 +248,13 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(
           ctx.textAlign = "center";
           ctx.textBaseline = "top";
           ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-          ctx.font = "600 16px 'Inter', system-ui, -apple-system, sans-serif";
+          ctx.font = "600 16px 'Outfit', system-ui, sans-serif";
           
           const labelStr = "BINAURAL BEAT".split("").join(String.fromCharCode(8202));
           ctx.fillText(labelStr, width / 2, 45);
           
           ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-          ctx.font = "800 64px 'JetBrains Mono', 'SF Mono', Menlo, monospace";
+          ctx.font = "800 64px 'Outfit', monospace";
           ctx.fillText(`${diffFreqRef.current.toFixed(1)}Hz`, width / 2, 70);
 
           // ==============================
@@ -270,11 +270,11 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(
           
           // Label
           ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-          ctx.font = "600 12px 'Inter', system-ui, -apple-system, sans-serif";
+          ctx.font = "600 12px 'Outfit', system-ui, sans-serif";
           ctx.fillText("REC TIME".split("").join(String.fromCharCode(8202)), width - 40, height - 70);
 
           // Value
-          ctx.font = "600 32px 'JetBrains Mono', 'SF Mono', Menlo, monospace";
+          ctx.font = "600 32px 'Outfit', monospace";
           ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
           ctx.fillText(timeStr, width - 40, height - 40);
 
@@ -283,7 +283,7 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(
           // ==============================
           ctx.textAlign = "center";
           ctx.textBaseline = "bottom";
-          ctx.font = "800 28px 'Inter', system-ui, -apple-system, sans-serif";
+          ctx.font = "800 28px 'Outfit', system-ui, sans-serif";
           ctx.fillStyle = stateColorRef.current;
           
           const stateStr = `${brainStateNameRef.current} STATE`.toUpperCase();

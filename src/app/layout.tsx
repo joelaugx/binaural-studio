@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Outfit } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const inter = Outfit({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const jetbrainsMono = Outfit({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
