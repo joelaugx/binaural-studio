@@ -1,0 +1,315 @@
+{
+  "track_metadata": {
+    "id": "sono_fisiologico_4_ciclos_100min",
+    "name": "Arquitetura de Sono Otimizada: 4 Ciclos de 100 Minutos",
+    "total_duration_seconds": 24000,
+    "description": "Jornada neuroacústica avançada estruturada em 4 ciclos macrofisiológicos de 100 minutos cada. O programa promove indução rápida de Alpha para Theta, aprofundamento contínuo para ondas Delta (N3) com maior dominância nos primeiros ciclos, e mimetiza com precisão o padrão dente-de-serra através de micro-nós oscilatórios de alta frequência Theta nas janelas REM terminais de cada ciclo."
+  },
+  "audio_settings": {
+    "carrier_frequency_hz": 105.0,
+    "wave_type": "sine",
+    "technique": "binaural_beat"
+  },
+  "timeline": [
+    {
+      "time_second": 0,
+      "target_binaural_hz": 12.0,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - Indução N1 (Alpha)"
+    },
+    {
+      "time_second": 300,
+      "target_binaural_hz": 6.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Transição N1/N2"
+    },
+    {
+      "time_second": 900,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Sono Leve N2"
+    },
+    {
+      "time_second": 1800,
+      "target_binaural_hz": 1.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Sono Profundo N3 (Delta Magnificado)"
+    },
+    {
+      "time_second": 4500,
+      "target_binaural_hz": 1.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Sono Profundo N3 (Estabilização)"
+    },
+    {
+      "time_second": 5100,
+      "target_binaural_hz": 7.2,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - Entrada REM (Efeito Serrilhado)"
+    },
+    {
+      "time_second": 5220,
+      "target_binaural_hz": 6.3,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 5340,
+      "target_binaural_hz": 8.0,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 5460,
+      "target_binaural_hz": 6.6,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 5580,
+      "target_binaural_hz": 7.8,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 5700,
+      "target_binaural_hz": 6.1,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 5820,
+      "target_binaural_hz": 8.3,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 5940,
+      "target_binaural_hz": 6.8,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 6000,
+      "target_binaural_hz": 5.0,
+      "interpolation": "smooth",
+      "stage_label": "Fim do Ciclo 1 / Transição Core"
+    },
+    {
+      "time_second": 6600,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Sono Leve N2"
+    },
+    {
+      "time_second": 7500,
+      "target_binaural_hz": 1.2,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Sono Profundo N3"
+    },
+    {
+      "time_second": 10200,
+      "target_binaural_hz": 1.8,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Sono Profundo N3 (Estabilização)"
+    },
+    {
+      "time_second": 11100,
+      "target_binaural_hz": 7.4,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 2 - Entrada REM (Efeito Serrilhado)"
+    },
+    {
+      "time_second": 11220,
+      "target_binaural_hz": 6.2,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 2 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 11340,
+      "target_binaural_hz": 8.1,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 2 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 11460,
+      "target_binaural_hz": 6.5,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 2 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 11580,
+      "target_binaural_hz": 7.9,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 2 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 11700,
+      "target_binaural_hz": 6.0,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 2 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 11820,
+      "target_binaural_hz": 8.4,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 2 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 11940,
+      "target_binaural_hz": 6.7,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 2 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 12000,
+      "target_binaural_hz": 5.0,
+      "interpolation": "smooth",
+      "stage_label": "Fim do Ciclo 2 / Transição Core"
+    },
+    {
+      "time_second": 12600,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Sono Leve N2"
+    },
+    {
+      "time_second": 13500,
+      "target_binaural_hz": 1.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Sono Profundo N3 (Mais Curto)"
+    },
+    {
+      "time_second": 15900,
+      "target_binaural_hz": 2.2,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Sono Profundo N3 (Fase Tardia)"
+    },
+    {
+      "time_second": 17100,
+      "target_binaural_hz": 7.5,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 3 - Entrada REM (Efeito Serrilhado)"
+    },
+    {
+      "time_second": 17220,
+      "target_binaural_hz": 6.4,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 3 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 17340,
+      "target_binaural_hz": 8.2,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 3 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 17460,
+      "target_binaural_hz": 6.7,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 3 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 17580,
+      "target_binaural_hz": 7.7,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 3 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 17700,
+      "target_binaural_hz": 6.3,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 3 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 17820,
+      "target_binaural_hz": 8.5,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 3 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 17940,
+      "target_binaural_hz": 6.9,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 3 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 18000,
+      "target_binaural_hz": 5.0,
+      "interpolation": "smooth",
+      "stage_label": "Fim do Ciclo 3 / Transição Core"
+    },
+    {
+      "time_second": 18600,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 4 - Sono Leve N2"
+    },
+    {
+      "time_second": 19500,
+      "target_binaural_hz": 2.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 4 - Sono Profundo N3 (Superficial/Breve)"
+    },
+    {
+      "time_second": 21900,
+      "target_binaural_hz": 2.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 4 - Sono Profundo N3 (Fase Tardia)"
+    },
+    {
+      "time_second": 23100,
+      "target_binaural_hz": 7.6,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 4 - Entrada REM (Efeito Serrilhado)"
+    },
+    {
+      "time_second": 23220,
+      "target_binaural_hz": 6.1,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 4 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 23340,
+      "target_binaural_hz": 8.4,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 4 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 23460,
+      "target_binaural_hz": 6.6,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 4 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 23580,
+      "target_binaural_hz": 7.9,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 4 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 23700,
+      "target_binaural_hz": 6.2,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 4 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 23820,
+      "target_binaural_hz": 8.5,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 4 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 23940,
+      "target_binaural_hz": 7.0,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 4 - REM (Micro-nó)"
+    },
+    {
+      "time_second": 24000,
+      "target_binaural_hz": 10.0,
+      "interpolation": "smooth",
+      "stage_label": "Fim do Ciclo 4 / Despertar Gradual Alpha"
+    }
+  ]
+}
