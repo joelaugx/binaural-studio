@@ -256,6 +256,19 @@ export default function StudioPage() {
     };
   }, []);
 
+  // ---- AUTO-STOP RECORDING ----
+  useEffect(() => {
+    if (
+      isRecordingMode &&
+      vizMode === "timeline" &&
+      !timelineEngine.isRunning &&
+      timelineEngine.totalDuration > 0 &&
+      timelineEngine.currentTime >= timelineEngine.totalDuration
+    ) {
+      stopRecordingSequence();
+    }
+  }, [isRecordingMode, vizMode, timelineEngine.isRunning, timelineEngine.currentTime, timelineEngine.totalDuration, stopRecordingSequence]);
+
   // ---- PHASE CHANGE BELL ----
   const prevLabelRef = useRef(timelineEngine.currentLabel);
   useEffect(() => {
