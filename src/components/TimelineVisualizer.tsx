@@ -206,7 +206,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         // ===== Y-AXIS (Hz labels) =====
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
-        ctx.font = "500 26px 'JetBrains Mono', monospace";
+        ctx.font = "500 18px 'JetBrains Mono', monospace";
         ctx.fillStyle = hexToRgba(p.axesColor, 1.0);
 
         const ySteps = maxHz <= 15 ? [0, 2, 4, 6, 8, 10, 12, 14] : [0, 4, 8, 14, 20, 30, 40];
@@ -228,7 +228,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ctx.save();
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.font = "600 24px 'JetBrains Mono', monospace";
+        ctx.font = "600 16px 'JetBrains Mono', monospace";
         ctx.fillStyle = hexToRgba(p.axesColor, 0.8);
         ctx.translate(30, chartTop + chartH / 2);
         ctx.rotate(-Math.PI / 2);
@@ -238,7 +238,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         // ===== X-AXIS (Minutes) =====
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
-        ctx.font = "500 26px 'JetBrains Mono', monospace";
+        ctx.font = "500 18px 'JetBrains Mono', monospace";
         ctx.fillStyle = hexToRgba(p.axesColor, 1.0);
 
         const minuteStep = totalDur <= 1800 ? 5 : totalDur <= 3600 ? 10 : 15;
@@ -256,9 +256,9 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         }
 
         // "Minutes" label
-        ctx.font = "600 24px 'JetBrains Mono', monospace";
+        ctx.font = "600 16px 'JetBrains Mono', monospace";
         ctx.fillStyle = hexToRgba(p.axesColor, 0.8);
-        ctx.fillText("Minutes", chartLeft + chartW / 2, chartBottom + 55);
+        ctx.fillText("Minutes", chartLeft + chartW / 2, chartBottom + 50);
 
         // ===== TIMELINE PATH =====
         if (p.timeline && p.timeline.timeline.length >= 2) {
@@ -322,38 +322,38 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
             }
             ctx.stroke();
             ctx.restore();
-
-            // -- Current position indicator (uses cursorColor) --
-            const curX = secToX(currentSec);
-            const curY = hzToY(p.currentHz);
-            
-            // Radar blink effect
-            const pulse = Math.sin(performance.now() / 150); // fast blink
-            const glowRadius = 8 + (pulse > 0 ? pulse * 6 : 0);
-
-            // Outer glow
-            ctx.save();
-            ctx.shadowBlur = 25 + glowRadius;
-            ctx.shadowColor = p.cursorColor;
-            ctx.fillStyle = hexToRgba(p.cursorColor, 0.6 + (pulse > 0 ? pulse * 0.4 : 0));
-            ctx.beginPath();
-            ctx.arc(curX, curY, glowRadius, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-
-            // Inner white core
-            ctx.fillStyle = "#ffffff";
-            ctx.beginPath();
-            ctx.arc(curX, curY, 6, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Ring (cursorColor)
-            ctx.strokeStyle = hexToRgba(p.cursorColor, 1.0);
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.arc(curX, curY, 12, 0, Math.PI * 2);
-            ctx.stroke();
           }
+
+          // -- Current position indicator (uses cursorColor) --
+          const curX = secToX(currentSec);
+          const curY = hzToY(p.currentHz);
+          
+          // Radar blink effect
+          const pulse = Math.sin(performance.now() / 150); // fast blink
+          const glowRadius = 8 + (pulse > 0 ? pulse * 6 : 0);
+
+          // Outer glow
+          ctx.save();
+          ctx.shadowBlur = 25 + glowRadius;
+          ctx.shadowColor = p.cursorColor;
+          ctx.fillStyle = hexToRgba(p.cursorColor, 0.6 + (pulse > 0 ? pulse * 0.4 : 0));
+          ctx.beginPath();
+          ctx.arc(curX, curY, glowRadius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+
+          // Inner white core
+          ctx.fillStyle = "#ffffff";
+          ctx.beginPath();
+          ctx.arc(curX, curY, 6, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Ring (cursorColor)
+          ctx.strokeStyle = hexToRgba(p.cursorColor, 1.0);
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.arc(curX, curY, 12, 0, Math.PI * 2);
+          ctx.stroke();
         }
 
         // ===== HUD: FREQUENCY DISPLAY (Top) =====
