@@ -38,6 +38,7 @@ interface AudioEngineActions {
   setMusicSrc: (src: string) => Promise<void>;
   getAudioStream: () => MediaStream | null;
   testBeep: () => void;
+  playPhaseBell: () => void;
   cleanup: () => void;
 }
 
@@ -423,6 +424,49 @@ export function useAudioEngine(): AudioEngine {
     o.stop(tCtx.currentTime + 0.6);
   }, []);
 
+  // ---- PHASE CHANGE BELL ----
+
+  const playPhaseBell = useCallback(() => {
+    if (!ctxRef.current || !destNodeRef.current) return;
+    const ctx = ctxRef.current;
+    
+    // Fundamental tone (Tibetan bowl style)
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = "sine";
+    osc1.frequency.setValueAtTime(432, ctx.currentTime);
+    
+    // Harmonic tone
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.type = "sine";
+    osc2.frequency.setValueAtTime(432 * 2.76, ctx.currentTime);
+    
+    osc1.connect(gain1);
+    osc2.connect(gain2);
+    
+    // Route to speakers AND the recording stream!
+    gain1.connect(ctx.destination);
+    gain1.connect(destNodeRef.current);
+    gain2.connect(ctx.destination);
+    gain2.connect(destNodeRef.current);
+    
+    // Envelope for main tone (soft attack, long decay)
+    gain1.gain.setValueAtTime(0, ctx.currentTime);
+    gain1.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.05);
+    gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4);
+    
+    // Envelope for harmonic (sharp attack, quick decay)
+    gain2.gain.setValueAtTime(0, ctx.currentTime);
+    gain2.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 0.02);
+    gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
+    
+    osc1.start(ctx.currentTime);
+    osc2.start(ctx.currentTime);
+    osc1.stop(ctx.currentTime + 4);
+    osc2.stop(ctx.currentTime + 2);
+  }, []);
+
   // ---- CLEANUP ----
 
   const cleanup = useCallback(() => {
@@ -462,6 +506,7 @@ export function useAudioEngine(): AudioEngine {
     setMusicSrc,
     getAudioStream,
     testBeep,
+    playPhaseBell,
     cleanup,
   };
 }

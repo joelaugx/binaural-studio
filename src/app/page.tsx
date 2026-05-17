@@ -256,6 +256,18 @@ export default function StudioPage() {
     };
   }, []);
 
+  // ---- PHASE CHANGE BELL ----
+  const prevLabelRef = useRef(timelineEngine.currentLabel);
+  useEffect(() => {
+    if (timelineEngine.currentLabel !== prevLabelRef.current) {
+      // Don't ring on the very first initial state load
+      if (prevLabelRef.current !== "") {
+        audioRef.current.playPhaseBell();
+      }
+      prevLabelRef.current = timelineEngine.currentLabel;
+    }
+  }, [timelineEngine.currentLabel]);
+
   // ---- PRESET BUTTON ----
   const selectPreset = useCallback(
     (stateName: string) => {
