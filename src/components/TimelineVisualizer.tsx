@@ -407,7 +407,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
         ctx.font = "600 13px 'Outfit', system-ui, sans-serif";
         ctx.fillText("L E F T".split("").join(String.fromCharCode(8202)), 40, 30);
-        ctx.fillStyle = p.traceAColor;
+        ctx.fillStyle = p.curveColor;
         ctx.font = "600 30px 'Outfit', monospace";
         ctx.fillText(`${p.baseFreq.toFixed(1)} Hz`, 40, 50);
 
@@ -416,7 +416,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
         ctx.font = "600 13px 'Outfit', system-ui, sans-serif";
         ctx.fillText("R I G H T".split("").join(String.fromCharCode(8202)), W - 40, 30);
-        ctx.fillStyle = p.traceBColor;
+        ctx.fillStyle = p.cursorColor;
         ctx.font = "600 30px 'Outfit', monospace";
         ctx.fillText(`${(p.baseFreq + p.diffFreq).toFixed(1)} Hz`, W - 40, 50);
 
