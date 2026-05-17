@@ -2,8 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Visualizer, { VisualizerHandle } from "@/components/Visualizer";
+import TimelineVisualizer, { TimelineVisualizerHandle } from "@/components/TimelineVisualizer";
 import { useAudioEngine } from "@/hooks/useAudioEngine";
 import { useRecorder } from "@/hooks/useRecorder";
+import { useTimelineEngine } from "@/hooks/useTimelineEngine";
 import {
   BRAIN_STATES,
   getBrainStateFromFreq,
@@ -12,12 +14,74 @@ import {
   PRESET_DURATIONS,
   formatTime,
 } from "@/lib/constants";
+import { TimelineScript, validateTimeline } from "@/lib/timelineSchema";
 import NoSleep from "nosleep.js";
+
+type VizMode = "oscilloscope" | "timeline";
 
 export default function StudioPage() {
   const audio = useAudioEngine();
   const recorder = useRecorder();
   const vizRef = useRef<VisualizerHandle>(null);
+  const timelineVizRef = useRef<TimelineVisualizerHandle>(null);
+
+  // ---- TIMELINE MODE STATE ----
+  const [vizMode, setVizMode] = useState<VizMode>("oscilloscope");
+  const [availableTimelines, setAvailableTimelines] = useState<{ id: string; name: string; file: string }[]>([]);
+  const [activeTimeline, setActiveTimeline] = useState<TimelineScript | null>(null);
+
+  // Timeline engine with audio integration
+  const timelineEngine = useTimelineEngine(
+    (hz) => audio.setDiffFreq(parseFloat(hz.toFixed(1))),
+    (carrierHz) => audio.setBaseFreq(carrierHz)
+  );
+
+  // Fetch available timelines on mount
+  useEffect(() => {
+    fetch("/timelines/manifest.json")
+      .then((r) => r.json())
+      .then(async (files: string[]) => {
+        const timelines: { id: string; name: string; file: string }[] = [];
+        for (const file of files) {
+          try {
+            const res = await fetch(`/timelines/${file}`);
+            const data = await res.json();
+            const validated = validateTimeline(data);
+            if (validated) {
+              timelines.push({
+                id: validated.track_metadata.id,
+                name: validated.track_metadata.name,
+                file,
+              });
+            }
+          } catch (err) {
+            console.warn(`Failed to load timeline ${file}:`, err);
+          }
+        }
+        setAvailableTimelines(timelines);
+      })
+      .catch((err) => console.warn("Failed to load timelines manifest:", err));
+  }, []);
+
+  // Load a timeline by filename
+  const loadTimelineFile = useCallback(async (file: string) => {
+    if (!file) {
+      setActiveTimeline(null);
+      timelineEngine.unload();
+      return;
+    }
+    try {
+      const res = await fetch(`/timelines/${file}`);
+      const data = await res.json();
+      const validated = validateTimeline(data);
+      if (validated) {
+        setActiveTimeline(validated);
+        timelineEngine.loadTimeline(validated);
+      }
+    } catch (err) {
+      console.warn("Failed to load timeline:", err);
+    }
+  }, [timelineEngine]);
 
   // UI state
   const [traceAColor, setTraceAColor] = useState("#3b82f6");
@@ -102,11 +166,19 @@ export default function StudioPage() {
 
     // Start timer and recording
     startTimer();
-    const canvas = vizRef.current?.getCanvas();
+    const canvas = vizMode === "timeline"
+      ? timelineVizRef.current?.getCanvas()
+      : vizRef.current?.getCanvas();
     if (canvas) {
       recorderRef.current.startRecording(canvas, audioRef.current.getAudioStream(), 30);
+      // Auto-start timeline playback in timeline mode (always from zero)
+      if (vizMode === "timeline" && activeTimeline) {
+        timelineEngine.reset();
+        // Small delay to ensure reset completes before play
+        requestAnimationFrame(() => timelineEngine.play());
+      }
     }
-  }, [resetTimer, startTimer]);
+  }, [resetTimer, startTimer, vizMode, activeTimeline, timelineEngine]);
 
   const stopRecordingSequence = useCallback(() => {
     recorderRef.current.stopRecording();
@@ -115,10 +187,16 @@ export default function StudioPage() {
     if (mouseTimerRef.current) clearTimeout(mouseTimerRef.current);
     document.body.classList.remove("recording-mode");
     
+    // Stop and reset timeline if in timeline mode
+    if (vizMode === "timeline") {
+      timelineEngine.pause();
+      timelineEngine.reset();
+    }
+
     if (noSleepRef.current) {
       noSleepRef.current.disable();
     }
-  }, [stopTimer]);
+  }, [stopTimer, vizMode, timelineEngine]);
 
   const restoreUI = useCallback(() => {
     if (recorderRef.current.isRecording) {
@@ -198,20 +276,40 @@ export default function StudioPage() {
 
   return (
     <main className="relative flex items-center justify-center h-screen w-screen overflow-hidden bg-black">
-      {/* ===== CANVAS ===== */}
-      <Visualizer
-        ref={vizRef}
-        isPlaying={audio.isPlaying}
-        showHud={isRecordingMode}
-        isRecording={recorder.isRecording}
-        diffFreq={audio.diffFreq}
-        baseFreq={audio.baseFreq}
-        brainStateName={brainState.name}
-        elapsed={recorder.elapsed}
-        traceAColor={traceAColor}
-        traceBColor={traceBColor}
-        stateColor={brainState.color}
-      />
+      {/* ===== CANVAS (Mode-dependent) ===== */}
+      {vizMode === "oscilloscope" ? (
+        <Visualizer
+          ref={vizRef}
+          isPlaying={audio.isPlaying}
+          showHud={isRecordingMode}
+          isRecording={recorder.isRecording}
+          diffFreq={audio.diffFreq}
+          baseFreq={audio.baseFreq}
+          brainStateName={brainState.name}
+          elapsed={recorder.elapsed}
+          traceAColor={traceAColor}
+          traceBColor={traceBColor}
+          stateColor={brainState.color}
+        />
+      ) : (
+        <TimelineVisualizer
+          ref={timelineVizRef}
+          timeline={activeTimeline}
+          isPlaying={audio.isPlaying}
+          showHud={isRecordingMode}
+          isRecording={recorder.isRecording}
+          currentTime={timelineEngine.currentTime}
+          currentHz={timelineEngine.currentHz}
+          currentLabel={timelineEngine.currentLabel}
+          baseFreq={audio.baseFreq}
+          diffFreq={audio.diffFreq}
+          brainStateName={brainState.name}
+          elapsed={recorder.elapsed}
+          traceAColor={traceAColor}
+          traceBColor={traceBColor}
+          stateColor={brainState.color}
+        />
+      )}
 
       {/* ===== COUNTDOWN OVERLAY ===== */}
       {countdown !== null && (
@@ -235,10 +333,40 @@ export default function StudioPage() {
       {/* ===== HEADER BAR ===== */}
       {!isRecordingMode && (
         <header className="fixed top-4 left-1/2 -translate-x-1/2 w-[96%] max-w-[1400px] z-20 glass rounded-2xl p-4 px-6 flex justify-between items-center shadow-2xl">
-        <h1 className="text-lg font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 uppercase">
-          Binaural Studio
-        </h1>
+        {/* Left group: Logo + Mode Toggle */}
+        <div className="flex items-center gap-3">
+          <h1 className="text-lg font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 uppercase">
+            Binaural Studio
+          </h1>
+          <nav className="flex bg-black/40 p-1 rounded-xl border border-white/5">
+            <button
+              onClick={() => setVizMode("oscilloscope")}
+              disabled={recorder.isRecording}
+              className="px-3 py-2 rounded-lg text-[10px] font-black uppercase transition-all cursor-pointer"
+              style={{
+                backgroundColor: vizMode === "oscilloscope" ? "#8b5cf6" : "transparent",
+                color: vizMode === "oscilloscope" ? "#fff" : "#94a3b8",
+                boxShadow: vizMode === "oscilloscope" ? "0 0 15px #8b5cf6" : "none",
+              }}
+            >
+              〰 Waves
+            </button>
+            <button
+              onClick={() => setVizMode("timeline")}
+              disabled={recorder.isRecording}
+              className="px-3 py-2 rounded-lg text-[10px] font-black uppercase transition-all cursor-pointer"
+              style={{
+                backgroundColor: vizMode === "timeline" ? "#8b5cf6" : "transparent",
+                color: vizMode === "timeline" ? "#fff" : "#94a3b8",
+                boxShadow: vizMode === "timeline" ? "0 0 15px #8b5cf6" : "none",
+              }}
+            >
+              📊 Timeline
+            </button>
+          </nav>
+        </div>
 
+        {/* Right group: Brain States + Actions */}
         <div className="flex items-center gap-3">
           {/* Brain State Buttons */}
           <nav className="flex bg-black/40 p-1 rounded-xl border border-white/5">
@@ -405,49 +533,119 @@ export default function StudioPage() {
       {/* ===== CONTROL PANEL (Bottom) ===== */}
       {!isRecordingMode && (
         <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[96%] max-w-[1400px] z-20 glass rounded-2xl p-5 px-8 shadow-2xl flex items-start gap-6">
-        {/* Col 1: Binaural Controls */}
+        {/* Col 1: Mode-dependent Controls */}
         <div className="flex-[1.5] flex flex-col gap-3">
-          <div className="flex justify-between items-center">
-            <label className="text-[10px] text-purple-400 uppercase font-black tracking-widest italic">
-              Binaural Dinâmico
-            </label>
-            <span
-              className="text-xs text-purple-300"
-              style={{ fontFamily: "var(--font-mono)" }}
-            >
-              {audio.diffFreq.toFixed(1)}Hz
-            </span>
-          </div>
-          <input
-            type="range"
-            min="0.5"
-            max="60"
-            step="0.1"
-            value={audio.diffFreq}
-            onChange={(e) => audio.setDiffFreq(parseFloat(e.target.value))}
-            className="w-full accent-purple-500"
-          />
+          {vizMode === "oscilloscope" ? (
+            <>
+              <div className="flex justify-between items-center">
+                <label className="text-[10px] text-purple-400 uppercase font-black tracking-widest italic">
+                  Binaural Dinâmico
+                </label>
+                <span
+                  className="text-xs text-purple-300"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  {audio.diffFreq.toFixed(1)}Hz
+                </span>
+              </div>
+              <input
+                type="range"
+                min="0.5"
+                max="60"
+                step="0.1"
+                value={audio.diffFreq}
+                onChange={(e) => audio.setDiffFreq(parseFloat(e.target.value))}
+                className="w-full accent-purple-500"
+              />
 
-          <div className="flex justify-between items-center mt-1">
-            <label className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">
-              Base Carrier
-            </label>
-            <span
-              className="text-[10px] text-blue-400"
-              style={{ fontFamily: "var(--font-mono)" }}
-            >
-              {audio.baseFreq}Hz
-            </span>
-          </div>
-          <input
-            type="range"
-            min="60"
-            max="600"
-            step="1"
-            value={audio.baseFreq}
-            onChange={(e) => audio.setBaseFreq(parseFloat(e.target.value))}
-            className="w-full"
-          />
+              <div className="flex justify-between items-center mt-1">
+                <label className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">
+                  Base Carrier
+                </label>
+                <span
+                  className="text-[10px] text-blue-400"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  {audio.baseFreq}Hz
+                </span>
+              </div>
+              <input
+                type="range"
+                min="60"
+                max="600"
+                step="1"
+                value={audio.baseFreq}
+                onChange={(e) => audio.setBaseFreq(parseFloat(e.target.value))}
+                className="w-full"
+              />
+            </>
+          ) : (
+            <>
+              {/* Timeline Selector */}
+              <div className="flex justify-between items-center">
+                <label className="text-[10px] text-purple-400 uppercase font-black tracking-widest italic">
+                  📊 Timeline Script
+                </label>
+              </div>
+              <select
+                value={activeTimeline?.track_metadata.id ?? ""}
+                onChange={(e) => {
+                  const selected = availableTimelines.find((t) => t.id === e.target.value);
+                  if (selected) loadTimelineFile(selected.file);
+                }}
+                disabled={timelineEngine.isRunning}
+                className="w-full bg-black/60 border border-white/10 text-white text-xs rounded-xl px-3 py-2.5 focus:outline-none focus:border-purple-500/50 cursor-pointer appearance-none"
+                style={{ fontFamily: "var(--font-mono)" }}
+              >
+                <option value="" disabled>
+                  Selecione uma timeline...
+                </option>
+                {availableTimelines.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.name}
+                  </option>
+                ))}
+              </select>
+
+              {/* Timeline info */}
+              {activeTimeline && (
+                <p className="text-[9px] text-slate-500 italic">
+                  {activeTimeline.track_metadata.description}
+                </p>
+              )}
+
+              {/* Duration info */}
+              {activeTimeline && (
+                <div className="flex justify-between items-center mt-1">
+                  <span className="text-[9px] text-slate-500 uppercase tracking-wider">
+                    Duração Total
+                  </span>
+                  <span className="text-[10px] text-purple-300" style={{ fontFamily: "var(--font-mono)" }}>
+                    {Math.floor(activeTimeline.track_metadata.total_duration_seconds / 60)}min
+                  </span>
+                </div>
+              )}
+
+              {/* Hint */}
+              <p className="text-[8px] text-slate-600 mt-1">
+                A curva inicia automaticamente ao gravar ⏺
+              </p>
+
+              {/* Progress bar */}
+              {activeTimeline && (
+                <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden mt-1">
+                  <div
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{
+                      width: `${timelineEngine.progress * 100}%`,
+                      background: `linear-gradient(to right, ${brainState.color}, #a855f7)`,
+                      boxShadow: `0 0 8px ${brainState.color}`,
+                    }}
+                  />
+                </div>
+              )}
+            </>
+          )}
         </div>
 
         {/* Col 2: Volume Controls */}

@@ -1,0 +1,28 @@
+{
+  "track_metadata": {
+    "id": "sleep-cycle-90min",
+    "name": "Sleep Cycle 90 Minutes",
+    "total_duration_seconds": 5400,
+    "description": "Ciclo completo de sono: Alpha → Theta → Delta → REM → Delta profundo"
+  },
+  "audio_settings": {
+    "carrier_frequency_hz": 120.0,
+    "wave_type": "sine",
+    "technique": "binaural_beat"
+  },
+  "timeline": [
+    { "time_second": 0,    "target_binaural_hz": 10.0, "interpolation": "linear", "stage_label": "Alpha" },
+    { "time_second": 300,  "target_binaural_hz": 8.0,  "interpolation": "smooth", "stage_label": "Alpha" },
+    { "time_second": 600,  "target_binaural_hz": 6.0,  "interpolation": "smooth", "stage_label": "Theta" },
+    { "time_second": 900,  "target_binaural_hz": 4.5,  "interpolation": "smooth", "stage_label": "Theta" },
+    { "time_second": 1200, "target_binaural_hz": 2.5,  "interpolation": "smooth", "stage_label": "Delta" },
+    { "time_second": 1800, "target_binaural_hz": 0.7,  "interpolation": "smooth", "stage_label": "Delta" },
+    { "time_second": 2700, "target_binaural_hz": 0.5,  "interpolation": "linear", "stage_label": "Delta" },
+    { "time_second": 3000, "target_binaural_hz": 5.0,  "interpolation": "smooth", "stage_label": "REM" },
+    { "time_second": 3600, "target_binaural_hz": 7.0,  "interpolation": "smooth", "stage_label": "REM" },
+    { "time_second": 3900, "target_binaural_hz": 4.0,  "interpolation": "smooth", "stage_label": "Theta" },
+    { "time_second": 4200, "target_binaural_hz": 2.0,  "interpolation": "smooth", "stage_label": "Delta" },
+    { "time_second": 4800, "target_binaural_hz": 0.7,  "interpolation": "smooth", "stage_label": "Delta" },
+    { "time_second": 5400, "target_binaural_hz": 0.5,  "interpolation": "smooth", "stage_label": "Delta" }
+  ]
+}
