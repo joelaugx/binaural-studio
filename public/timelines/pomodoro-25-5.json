@@ -1,0 +1,21 @@
+{
+  "track_metadata": {
+    "id": "pomodoro-25-5",
+    "name": "Pomodoro 25x5 (Gamma/Alpha)",
+    "total_duration_seconds": 1800,
+    "description": "Foco profundo com ondas Gamma (40Hz) por 25 minutos, seguido de descanso em Alpha (10Hz) por 5 minutos."
+  },
+  "audio_settings": {
+    "carrier_frequency_hz": 200.0,
+    "wave_type": "sine",
+    "technique": "binaural_beat"
+  },
+  "timeline": [
+    { "time_second": 0,    "target_binaural_hz": 14.0, "interpolation": "linear", "stage_label": "Beta" },
+    { "time_second": 60,   "target_binaural_hz": 40.0, "interpolation": "smooth", "stage_label": "Gamma" },
+    { "time_second": 1440, "target_binaural_hz": 40.0, "interpolation": "linear", "stage_label": "Gamma" },
+    { "time_second": 1500, "target_binaural_hz": 10.0, "interpolation": "smooth", "stage_label": "Alpha" },
+    { "time_second": 1740, "target_binaural_hz": 10.0, "interpolation": "linear", "stage_label": "Alpha" },
+    { "time_second": 1800, "target_binaural_hz": 14.0, "interpolation": "smooth", "stage_label": "Beta" }
+  ]
+}

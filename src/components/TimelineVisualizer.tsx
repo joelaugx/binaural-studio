@@ -230,7 +230,14 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ctx.font = "500 21px 'Outfit', monospace";
         ctx.fillStyle = hexToRgba(p.axesColor, 1.0);
 
-        const ySteps = maxHz <= 15 ? [0, 2, 4, 6, 8, 10, 12, 14] : [0, 4, 8, 14, 20, 30, 40];
+        let ySteps: number[];
+        if (maxHz <= 15) {
+          ySteps = [0, 2, 4, 6, 8, 10, 12, 14];
+        } else if (maxHz <= 30) {
+          ySteps = [0, 4, 8, 14, 20, 30];
+        } else {
+          ySteps = [0, 4, 8, 14, 20, 30, 40, 50, 60].filter(y => y <= Math.ceil(maxHz) + 5);
+        }
         for (const hz of ySteps) {
           if (hz > maxHz) continue;
           const y = hzToY(hz);
