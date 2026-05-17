@@ -176,9 +176,12 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         const chartH = chartBottom - chartTop;
 
         // Determine Y-axis range from timeline data
-        const maxHz = p.timeline
-          ? Math.max(15, ...p.timeline.timeline.map((kf) => kf.target_binaural_hz) , 15)
+        let maxTimelineHz = p.timeline
+          ? Math.max(15, ...p.timeline.timeline.map((kf) => kf.target_binaural_hz))
           : 15;
+        
+        // If it goes into Gamma, extend the chart up to 65Hz so it doesn't touch the ceiling
+        const maxHz = maxTimelineHz > 30 ? 65 : maxTimelineHz > 15 ? 30 : 15;
 
         // Map Hz to Y pixel
         const hzToY = (hz: number) => chartBottom - (hz / maxHz) * chartH;
