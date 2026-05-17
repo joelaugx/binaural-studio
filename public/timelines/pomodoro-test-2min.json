@@ -1,0 +1,24 @@
+{
+  "track_metadata": {
+    "id": "pomodoro-test-2min",
+    "name": "Pomodoro Test (Fast Cycle)",
+    "total_duration_seconds": 120,
+    "description": "Script de teste ultrarrápido (2 minutos totais). Alterna entre Gamma e Alpha em segundos para debugar sons de sino e banners visuais."
+  },
+  "audio_settings": {
+    "carrier_frequency_hz": 200.0,
+    "wave_type": "sine",
+    "technique": "binaural_beat"
+  },
+  "timeline": [
+    { "time_second": 0,   "target_binaural_hz": 14.0, "interpolation": "linear", "stage_label": "Beta" },
+    { "time_second": 5,   "target_binaural_hz": 65.0, "interpolation": "smooth", "stage_label": "Gamma" },
+    { "time_second": 30,  "target_binaural_hz": 65.0, "interpolation": "linear", "stage_label": "Gamma" },
+    { "time_second": 35,  "target_binaural_hz": 10.0, "interpolation": "smooth", "stage_label": "Alpha" },
+    { "time_second": 60,  "target_binaural_hz": 10.0, "interpolation": "linear", "stage_label": "Alpha" },
+    { "time_second": 65,  "target_binaural_hz": 65.0, "interpolation": "smooth", "stage_label": "Gamma" },
+    { "time_second": 90,  "target_binaural_hz": 65.0, "interpolation": "linear", "stage_label": "Gamma" },
+    { "time_second": 95,  "target_binaural_hz": 10.0, "interpolation": "smooth", "stage_label": "Alpha" },
+    { "time_second": 120, "target_binaural_hz": 10.0, "interpolation": "linear", "stage_label": "Alpha" }
+  ]
+}
