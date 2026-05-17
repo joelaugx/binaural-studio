@@ -1,0 +1,171 @@
+{
+  "track_metadata": {
+    "id": "sono_arquitetura_5ciclos_450m",
+    "name": "Arquitetura Digital do Sono - 5 Ciclos Completos",
+    "total_duration_seconds": 27000,
+    "description": "Jornada neuroacústica de 450 minutos baseada na fisiologia cíclica do sono humano. Estruturada em 5 ciclos de 90 minutos, prioriza ondas Delta profundas (N3) nos primeiros ciclos para otimizar a regeneração física e somática, expandindo gradativamente as fases REM (ondas Theta altas/Alpha baixas) nos ciclos finais para consolidação de memória, processamento emocional e restauração cognitiva."
+  },
+  "audio_settings": {
+    "carrier_frequency_hz": 100.0,
+    "wave_type": "sine",
+    "technique": "binaural_beat"
+  },
+  "timeline": [
+    {
+      "time_second": 0,
+      "target_binaural_hz": 12.0,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - Indução N1 (Alpha)"
+    },
+    {
+      "time_second": 300,
+      "target_binaural_hz": 7.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Transição N1 para N2 (Theta)"
+    },
+    {
+      "time_second": 900,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Sono Leve N2"
+    },
+    {
+      "time_second": 1500,
+      "target_binaural_hz": 2.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Entrada Sono Profundo N3 (Delta)"
+    },
+    {
+      "time_second": 4200,
+      "target_binaural_hz": 0.8,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Pico Maximo de Ondas Delta (Reparo Fisico)"
+    },
+    {
+      "time_second": 4800,
+      "target_binaural_hz": 6.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Transição para Fase REM"
+    },
+    {
+      "time_second": 5400,
+      "target_binaural_hz": 7.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Fase REM Inicial"
+    },
+    {
+      "time_second": 6000,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Retorno ao Sono Leve N2"
+    },
+    {
+      "time_second": 6600,
+      "target_binaural_hz": 1.8,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Sono Profundo N3 (Delta)"
+    },
+    {
+      "time_second": 8700,
+      "target_binaural_hz": 1.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Estabilização Delta"
+    },
+    {
+      "time_second": 9900,
+      "target_binaural_hz": 6.8,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Transição para Fase REM"
+    },
+    {
+      "time_second": 10800,
+      "target_binaural_hz": 7.8,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Fase REM Expandida"
+    },
+    {
+      "time_second": 11400,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Sono Leve N2"
+    },
+    {
+      "time_second": 12300,
+      "target_binaural_hz": 2.2,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Sono Profundo N3 Moderado"
+    },
+    {
+      "time_second": 13800,
+      "target_binaural_hz": 4.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Manutenção em Theta N2"
+    },
+    {
+      "time_second": 14700,
+      "target_binaural_hz": 7.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Transição para Fase REM"
+    },
+    {
+      "time_second": 16200,
+      "target_binaural_hz": 7.8,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Fase REM Prolongada"
+    },
+    {
+      "time_second": 16800,
+      "target_binaural_hz": 4.8,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 4 - Sono Leve N2 Predominante"
+    },
+    {
+      "time_second": 18900,
+      "target_binaural_hz": 4.2,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 4 - Estabilização de Transição Cortical"
+    },
+    {
+      "time_second": 19800,
+      "target_binaural_hz": 7.2,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 4 - Entrada em Fase REM Avançada"
+    },
+    {
+      "time_second": 21600,
+      "target_binaural_hz": 8.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 4 - Pico REM Coerente"
+    },
+    {
+      "time_second": 22200,
+      "target_binaural_hz": 5.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 5 - Sono Leve N2 Final"
+    },
+    {
+      "time_second": 24000,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 5 - Integração Neurofisiológica"
+    },
+    {
+      "time_second": 24900,
+      "target_binaural_hz": 7.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 5 - Fase REM de Alta Densidade"
+    },
+    {
+      "time_second": 26400,
+      "target_binaural_hz": 8.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 5 - Finalização REM e Consolidação Sináptica"
+    },
+    {
+      "time_second": 27000,
+      "target_binaural_hz": 10.0,
+      "interpolation": "smooth",
+      "stage_label": "Despertar Suave - Transição para Alpha Consciente"
+    }
+  ]
+}
