@@ -503,7 +503,7 @@ export default function StudioPage() {
             </p>
             <p
               className="text-2xl font-black"
-              style={{ color: traceAColor, fontFamily: "var(--font-mono)" }}
+              style={{ color: curveColor, fontFamily: "var(--font-mono)" }}
             >
               {audio.baseFreq.toFixed(1)}Hz
             </p>
@@ -514,7 +514,7 @@ export default function StudioPage() {
             </p>
             <p
               className="text-2xl font-black"
-              style={{ color: traceBColor, fontFamily: "var(--font-mono)" }}
+              style={{ color: cursorColor, fontFamily: "var(--font-mono)" }}
             >
               {(audio.baseFreq + audio.diffFreq).toFixed(1)}Hz
             </p>

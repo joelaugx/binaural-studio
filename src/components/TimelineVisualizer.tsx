@@ -397,40 +397,6 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
           ctx.arc(curX, curY, baseRadius, 0, Math.PI * 2);
           ctx.stroke();
 
-          // Rest Banner (Flashy inverted box) for Pomodoro
-          if (p.timeline?.track_metadata.name.toLowerCase().includes("pomodoro") && p.currentHz <= 14) {
-            ctx.save();
-            ctx.font = "800 24px 'Outfit', monospace";
-            const text = "D E S C A N S E";
-            const metrics = ctx.measureText(text);
-            const padX = 24;
-            const padY = 12;
-            const boxW = metrics.width + padX * 2;
-            const boxH = 44;
-            // Float the box above the cursor
-            const boxX = curX - boxW / 2;
-            const boxY = curY - 70;
-            
-            // Draw glowing box
-            ctx.fillStyle = p.cursorColor;
-            ctx.shadowColor = p.cursorColor;
-            ctx.shadowBlur = 20;
-            ctx.beginPath();
-            if (ctx.roundRect) {
-              ctx.roundRect(boxX, boxY, boxW, boxH, 8);
-            } else {
-              ctx.rect(boxX, boxY, boxW, boxH);
-            }
-            ctx.fill();
-            
-            // Draw text
-            ctx.shadowBlur = 0;
-            ctx.fillStyle = "#000000"; // inverted text for high contrast
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(text, curX, boxY + boxH / 2 + 1);
-            ctx.restore();
-          }
         }
 
         // ===== HUD: FREQUENCY DISPLAY (Top) =====
@@ -464,6 +430,44 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
         ctx.font = "800 54px 'Outfit', monospace";
         ctx.fillText(`${p.diffFreq.toFixed(1)}Hz`, W / 2, 45);
+
+        // Rest Banner (Flashy inverted box) fixed at top HUD between left and center
+        if (p.timeline?.track_metadata.name.toLowerCase().includes("pomodoro") && p.currentHz <= 14) {
+          ctx.save();
+          ctx.font = "800 36px 'Outfit', monospace"; // Increased by 50%
+          const text = "D E S C A N S E";
+          const metrics = ctx.measureText(text);
+          const padX = 36; // Increased by 50%
+          const padY = 18; // Increased by 50%
+          const boxW = metrics.width + padX * 2;
+          const boxH = 66; // Increased by 50%
+          
+          // Position between left trace and center: W/4
+          const boxCenterX = W / 4;
+          const boxX = boxCenterX - boxW / 2;
+          // Align with the HUD vertically
+          const boxY = 22;
+          
+          // Draw glowing box
+          ctx.fillStyle = p.cursorColor;
+          ctx.shadowColor = p.cursorColor;
+          ctx.shadowBlur = 30; // Increased shadow
+          ctx.beginPath();
+          if (ctx.roundRect) {
+            ctx.roundRect(boxX, boxY, boxW, boxH, 12); // Slightly larger radius
+          } else {
+            ctx.rect(boxX, boxY, boxW, boxH);
+          }
+          ctx.fill();
+          
+          // Draw text
+          ctx.shadowBlur = 0;
+          ctx.fillStyle = "#000000"; // inverted text for high contrast
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(text, boxCenterX, boxY + boxH / 2 + 2);
+          ctx.restore();
+        }
 
         // ===== HUD: TIMER (Top Center) =====
         if (p.timeline) {
