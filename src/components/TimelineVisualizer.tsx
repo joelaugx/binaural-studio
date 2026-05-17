@@ -64,10 +64,28 @@ function formatTimeWithTenths(ms: number) {
 }
 
 function hexToRgba(hex: string, alpha: number): string {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  if (!hex || typeof hex !== "string") return `rgba(255, 255, 255, ${alpha})`;
+  if (hex.startsWith("rgb")) return hex;
+  
+  const cleanHex = hex.replace("#", "");
+  let r = 255, g = 255, b = 255;
+  
+  if (cleanHex.length === 6) {
+    r = parseInt(cleanHex.slice(0, 2), 16);
+    g = parseInt(cleanHex.slice(2, 4), 16);
+    b = parseInt(cleanHex.slice(4, 6), 16);
+  } else if (cleanHex.length === 3) {
+    r = parseInt(cleanHex[0] + cleanHex[0], 16);
+    g = parseInt(cleanHex[1] + cleanHex[1], 16);
+    b = parseInt(cleanHex[2] + cleanHex[2], 16);
+  }
+  
+  if (isNaN(r)) r = 255;
+  if (isNaN(g)) g = 255;
+  if (isNaN(b)) b = 255;
+  
+  const safeAlpha = Math.max(0, Math.min(1, alpha));
+  return `rgba(${r}, ${g}, ${b}, ${safeAlpha})`;
 }
 
 // ---- COMPONENT ----
@@ -399,17 +417,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         ctx.fillText(`${p.diffFreq.toFixed(1)}Hz`, W / 2, 58);
 
         // ===== HUD: BOTTOM BAR =====
-        // State name (center-bottom)
-        ctx.textAlign = "center";
-        ctx.textBaseline = "bottom";
-        ctx.font = "800 24px 'Inter', system-ui, sans-serif";
-        ctx.fillStyle = brainState.color;
-        ctx.shadowColor = brainState.color;
-        ctx.shadowBlur = 12;
-        const stateStr = `${p.brainStateName} STATE`.toUpperCase();
-        const spacedState = stateStr.split("").join(String.fromCharCode(8198));
-        ctx.fillText(spacedState, W / 2, H - 28);
-        ctx.shadowBlur = 0;
+        // (Brain State text removed)
 
         // Timeline progress time (bottom-left)
         if (p.timeline) {
