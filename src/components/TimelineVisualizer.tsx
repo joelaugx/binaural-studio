@@ -38,7 +38,7 @@ const BANDS = [
   { name: "Theta",  min: 4,   max: 8,   color: BRAIN_STATES.Theta.color },
   { name: "Alpha",  min: 8,   max: 14,  color: BRAIN_STATES.Alpha.color },
   { name: "Beta",   min: 14,  max: 30,  color: BRAIN_STATES.Beta.color },
-  { name: "Gamma",  min: 30,  max: 45,  color: BRAIN_STATES.Gamma.color },
+  { name: "Gamma",  min: 30,  max: 65,  color: BRAIN_STATES.Gamma.color },
 ];
 
 // Chart layout margins (in 1920x1080 canvas coordinates)
@@ -236,7 +236,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
         } else if (maxHz <= 30) {
           ySteps = [0, 4, 8, 14, 20, 30];
         } else {
-          ySteps = [0, 4, 8, 14, 20, 30, 40, 50, 60].filter(y => y <= Math.ceil(maxHz) + 5);
+          ySteps = [0, 4, 8, 14, 20, 30, 40, 50, 60, 70, 80].filter(y => y <= Math.ceil(maxHz) + 5);
         }
         for (const hz of ySteps) {
           if (hz > maxHz) continue;
