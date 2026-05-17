@@ -201,25 +201,7 @@ const TimelineVisualizer = forwardRef<TimelineVisualizerHandle, TimelineVisualiz
           ctx.shadowBlur = 0;
         }
 
-        // ===== REM LINE (7 Hz dashed line) =====
-        const remY = hzToY(7);
-        if (remY > chartTop && remY < chartBottom) {
-          ctx.strokeStyle = "rgba(168, 85, 247, 0.25)";
-          ctx.lineWidth = 1;
-          ctx.setLineDash([6, 4]);
-          ctx.beginPath();
-          ctx.moveTo(chartLeft, remY);
-          ctx.lineTo(chartRight, remY);
-          ctx.stroke();
-          ctx.setLineDash([]);
 
-          // REM label
-          ctx.textAlign = "left";
-          ctx.textBaseline = "bottom";
-          ctx.font = "600 11px 'Inter', system-ui, sans-serif";
-          ctx.fillStyle = "rgba(168, 85, 247, 0.4)";
-          ctx.fillText("REM state", chartLeft + 8, remY - 4);
-        }
 
         // ===== Y-AXIS (Hz labels) =====
         ctx.textAlign = "right";
