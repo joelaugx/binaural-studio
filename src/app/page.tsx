@@ -275,11 +275,15 @@ export default function StudioPage() {
     if (timelineEngine.currentLabel !== prevLabelRef.current) {
       // Don't ring on the very first initial state load
       if (prevLabelRef.current !== "") {
-        audioRef.current.playPhaseBell();
+        // Only ring the bell for Pomodoro tracks (to avoid waking up in sleep tracks)
+        const isPomodoro = activeTimeline?.track_metadata.name.toLowerCase().includes("pomodoro");
+        if (isPomodoro) {
+          audioRef.current.playPhaseBell();
+        }
       }
       prevLabelRef.current = timelineEngine.currentLabel;
     }
-  }, [timelineEngine.currentLabel]);
+  }, [timelineEngine.currentLabel, activeTimeline]);
 
   // ---- PRESET BUTTON ----
   const selectPreset = useCallback(
