@@ -95,6 +95,8 @@ export function useAudioEngine(): AudioEngine {
   const sound2SourceRef = useRef<AudioBufferSourceNode | null>(null);
   const musicSourceRef = useRef<AudioBufferSourceNode | null>(null);
 
+  const bellBufferRef = useRef<AudioBuffer | null>(null);
+
   const baseFreqRef = useRef(200);
   const diffFreqRef = useRef(10);
 
@@ -426,45 +428,31 @@ export function useAudioEngine(): AudioEngine {
 
   // ---- PHASE CHANGE BELL ----
 
-  const playPhaseBell = useCallback(() => {
+  const playPhaseBell = useCallback(async () => {
     if (!ctxRef.current || !destNodeRef.current) return;
     const ctx = ctxRef.current;
     
-    // Fundamental tone (Tibetan bowl style)
-    const osc1 = ctx.createOscillator();
-    const gain1 = ctx.createGain();
-    osc1.type = "sine";
-    osc1.frequency.setValueAtTime(432, ctx.currentTime);
+    // Load and decode the bell sound if not already loaded
+    if (!bellBufferRef.current) {
+      try {
+        const response = await fetch("/audio/bell.mp3");
+        const arrayBuffer = await response.arrayBuffer();
+        bellBufferRef.current = await ctx.decodeAudioData(arrayBuffer);
+      } catch (err) {
+        console.error("Failed to load bell sound:", err);
+        return;
+      }
+    }
     
-    // Harmonic tone
-    const osc2 = ctx.createOscillator();
-    const gain2 = ctx.createGain();
-    osc2.type = "sine";
-    osc2.frequency.setValueAtTime(432 * 2.76, ctx.currentTime);
+    // Play the bell
+    const source = ctx.createBufferSource();
+    source.buffer = bellBufferRef.current;
     
-    osc1.connect(gain1);
-    osc2.connect(gain2);
+    // Connect to both speakers and recording stream
+    source.connect(ctx.destination);
+    source.connect(destNodeRef.current);
     
-    // Route to speakers AND the recording stream!
-    gain1.connect(ctx.destination);
-    gain1.connect(destNodeRef.current);
-    gain2.connect(ctx.destination);
-    gain2.connect(destNodeRef.current);
-    
-    // Envelope for main tone (soft attack, long decay)
-    gain1.gain.setValueAtTime(0, ctx.currentTime);
-    gain1.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.05);
-    gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4);
-    
-    // Envelope for harmonic (sharp attack, quick decay)
-    gain2.gain.setValueAtTime(0, ctx.currentTime);
-    gain2.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 0.02);
-    gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
-    
-    osc1.start(ctx.currentTime);
-    osc2.start(ctx.currentTime);
-    osc1.stop(ctx.currentTime + 4);
-    osc2.stop(ctx.currentTime + 2);
+    source.start(ctx.currentTime);
   }, []);
 
   // ---- CLEANUP ----
