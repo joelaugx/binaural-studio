@@ -1,0 +1,135 @@
+{
+  "track_metadata": {
+    "id": "sono_fisiologico_3_ciclos_90min",
+    "name": "Arquitetura de Sono Otimizada: 3 Ciclos de 90 Minutos",
+    "total_duration_seconds": 16200,
+    "description": "Jornada neuroacústica estruturada em conformidade estrita com a macrofisiologia do sono humano ao longo de 3 ciclos de 90 minutos. Apresenta alta dominância de ondas Delta profundas (N3) nos dois primeiros ciclos para otimização da restauração física, seguida por um encurtamento drástico do sono profundo e uma expansão harmônica e contínua da janela REM (Theta alto/Alpha baixo) no terço final do programa."
+  },
+  "audio_settings": {
+    "carrier_frequency_hz": 100.0,
+    "wave_type": "sine",
+    "technique": "binaural_beat"
+  },
+  "timeline": [
+    {
+      "time_second": 0,
+      "target_binaural_hz": 12.0,
+      "interpolation": "linear",
+      "stage_label": "Ciclo 1 - Indução N1 (Alpha)"
+    },
+    {
+      "time_second": 300,
+      "target_binaural_hz": 7.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Transição N1/N2"
+    },
+    {
+      "time_second": 900,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Sono Leve N2"
+    },
+    {
+      "time_second": 1800,
+      "target_binaural_hz": 1.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Sono Profundo N3 (Vale Delta Magnificado)"
+    },
+    {
+      "time_second": 4500,
+      "target_binaural_hz": 1.0,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Estabilização Delta N3"
+    },
+    {
+      "time_second": 4920,
+      "target_binaural_hz": 6.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Fase REM Breve (Curva Suave)"
+    },
+    {
+      "time_second": 5280,
+      "target_binaural_hz": 6.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 1 - Estabilização REM"
+    },
+    {
+      "time_second": 5400,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Fim do Ciclo 1 / Início do Ciclo 2"
+    },
+    {
+      "time_second": 6300,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Sono Leve N2"
+    },
+    {
+      "time_second": 7200,
+      "target_binaural_hz": 1.2,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Sono Profundo N3 Moderado"
+    },
+    {
+      "time_second": 9300,
+      "target_binaural_hz": 1.2,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Estabilização Delta N3"
+    },
+    {
+      "time_second": 9900,
+      "target_binaural_hz": 7.2,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Fase REM Estendida"
+    },
+    {
+      "time_second": 10620,
+      "target_binaural_hz": 7.2,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 2 - Estabilização REM"
+    },
+    {
+      "time_second": 10800,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Fim do Ciclo 2 / Início do Ciclo 3"
+    },
+    {
+      "time_second": 11700,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Sono Leve N2"
+    },
+    {
+      "time_second": 12600,
+      "target_binaural_hz": 2.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Sono Profundo Superficial e Breve"
+    },
+    {
+      "time_second": 13500,
+      "target_binaural_hz": 4.5,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Retorno a Sono Leve N2"
+    },
+    {
+      "time_second": 14400,
+      "target_binaural_hz": 7.8,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Janela REM Dominante e Ampliada"
+    },
+    {
+      "time_second": 15700,
+      "target_binaural_hz": 8.2,
+      "interpolation": "smooth",
+      "stage_label": "Ciclo 3 - Pico REM / Transição Homogênea"
+    },
+    {
+      "time_second": 16200,
+      "target_binaural_hz": 10.0,
+      "interpolation": "smooth",
+      "stage_label": "Fim do Ciclo 3 / Despertar Gradual Alpha"
+    }
+  ]
+}
